@@ -20,13 +20,19 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required'
         ]);
-        $user = new User();
-        // $role = $user->role = 'admin';
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user(); // User sudah terautentikasi di sini
 
-        if ($user->role = 'admin') {
-            if (Auth::attempt($credentials)) {
-                return redirect()->intended('/admin/dashboard'); // Ganti dengan halaman tujuan
+            if ($user->hasRole('Admin')) {
+                return redirect()->intended('/admin/dashboard');
             }
+
+            if ($user->hasRole('Customer')) {
+                return redirect()->intended('/customer/dashboard');
+            }
+
+            // Jika role tidak dikenal
+            return redirect('/login')->with('error', 'Role tidak dikenali.');
         }
 
         return back()->with('error', 'Email atau password salah');

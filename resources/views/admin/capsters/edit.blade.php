@@ -17,8 +17,8 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="tempattinggal" class="form-label">Tempat Tinggal</label>
-                        <input type="text" class="form-control" id="tempattinggal" name="tempattinggal"
+                        <label for="tempat_tinggal" class="form-label">Tempat Tinggal</label>
+                        <input type="text" class="form-control" id="tempatt_inggal" name="tempat_tinggal"
                             value="{{ $capster->tempat_tinggal }}" required>
                     </div>
 
@@ -55,13 +55,14 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="photo" class="form-label">Foto</label>
-                        <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
+                        <label for="foto" class="form-label">Foto</label>
+                        <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
                         @if ($capster->foto)
                             <p class="mt-2">Foto saat ini:</p>
                             <img src="{{ asset('storage/' . $capster->foto) }}" alt="Foto Capster" width="150">
                         @endif
                     </div>
+
 
                     <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                     <a href="{{ route('capsters.index') }}" class="btn btn-secondary">Batal</a>

@@ -20,7 +20,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($capsters as $capster)
+                @forelse ($capsters as $capster)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $capster->name }}</td>
@@ -33,12 +33,25 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Yakin ingin menghapus?')">🗑 Hapus</button>
+                                    onclick="return confirm('Yakin ingin menghapus {{ $capster->name }}?')">🗑
+                                    Hapus</button>
                             </form>
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="6" class="text-center">Capster Belum ada</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
+
+        <!-- Pagination Bootstrap -->
+        <nav aria-label="Page navigation">
+            {{ $capsters->onEachSide(1)->links('pagination::bootstrap-5', [
+                'list_classes' => ['pagination', 'pagination-lg'],
+                'aria_label' => 'Page navigation',
+            ]) }}
+        </nav>
     </div>
 @endsection
