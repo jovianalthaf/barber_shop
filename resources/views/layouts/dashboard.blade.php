@@ -80,8 +80,11 @@
     <div class="sidebar">
         <h4 class="text-center text-white">CMS Barbershop</h4>
         <a href="{{ route('dashboard') }}">🏠 Dashboard</a>
-        <a href="{{ route('capsters.index') }}">💇‍♂️ Capster</a>
-        <a href="{{ route('services.index') }}">Service</a>
+        @if (auth()->user()->hasRole('Admin'))
+            <a href="{{ route('capsters.index') }}">💇‍♂️ Capster</a>
+            <a href="{{ route('services.index') }}">✂️ Service</a>
+        @endif
+
         <form action="{{ route('auth.logout') }}" method="POST">
             @csrf
             <button type="submit" class="btn btn-danger w-100 text-start">🚪 Logout</button>

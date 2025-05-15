@@ -1,0 +1,63 @@
+.contact-form-area {
+    padding-top: 80px;
+    padding-bottom: 80px;
+    background-color: #f9f9f9;
+}
+
+.contact-form-area .section-tittle span {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ff5f13;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.contact-form-area .section-tittle h2 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #2c234d;
+    margin-bottom: 0;
+}
+
+.contact-form-area input,
+.contact-form-area select,
+.contact-form-area textarea {
+    width: 100%;
+    border: 1px solid #ddd;
+    background: #fff;
+    padding: 14px 20px;
+    font-size: 15px;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+    color: #333;
+}
+
+.contact-form-area input:focus,
+.contact-form-area select:focus,
+.contact-form-area textarea:focus {
+    border-color: #ff5f13;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(255, 95, 19, 0.2);
+}
+
+.contact-form-area textarea {
+    resize: none;
+    height: auto;
+}
+
+.contact-form-area .btn.header-btn {
+    background: #ff5f13;
+    color: #fff;
+    padding: 14px 35px;
+    font-weight: 600;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    transition: 0.3s;
+    display: inline-block;
+}
+
+.contact-form-area .btn.header-btn:hover {
+    background: #2c234d;
+    color: #fff;
+}

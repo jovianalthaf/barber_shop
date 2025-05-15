@@ -15,24 +15,42 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Buat role jika belum ada
+        // Roles
         $adminRole = Role::firstOrCreate(['name' => 'Admin']);
         $customerRole = Role::firstOrCreate(['name' => 'Customer']);
+        $capsterRole = Role::firstOrCreate(['name' => 'Capster']);
 
-        // Buat user admin
-        $admin = User::create([
-            'name' => 'Admin User',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('123456'), // Ganti dengan password aman
-        ]);
-        $admin->assignRole($adminRole);
+        // Admin User
+        $admin = User::where('email', 'admin@example.com')->first();
+        if (!$admin) {
+            $admin = User::create([
+                'name' => 'Admin User',
+                'email' => 'admin@example.com',
+                'password' => Hash::make('123456'),
+            ]);
+            $admin->assignRole($adminRole);
+        }
 
-        // Buat user customer
-        $customer = User::create([
-            'name' => 'Customer User',
-            'email' => 'customer@example.com',
-            'password' => Hash::make('123456'), // Ganti dengan password aman
-        ]);
-        $customer->assignRole($customerRole);
+        // Customer User
+        $customer = User::where('email', 'customer@example.com')->first();
+        if (!$customer) {
+            $customer = User::create([
+                'name' => 'Customer User',
+                'email' => 'customer@example.com',
+                'password' => Hash::make('123456'),
+            ]);
+            $customer->assignRole($customerRole);
+        }
+
+        // Capster User
+        $capster = User::where('email', 'capster@example.com')->first();
+        if (!$capster) {
+            $capster = User::create([
+                'name' => 'Capster User',
+                'email' => 'capster@example.com',
+                'password' => Hash::make('123456'),
+            ]);
+            $capster->assignRole($capsterRole);
+        }
     }
 }

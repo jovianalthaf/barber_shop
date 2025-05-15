@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/slick.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/nice-select.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/form.css') }}">
 </head>
 
 <body>
@@ -224,6 +225,49 @@
             </div>
         </section>
         <!-- Services Area End -->
+        {{-- booking --}}
+        <section class="contact-form-area section-padding30">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-8 col-lg-9 col-md-11">
+                        <div class="section-tittle text-center mb-50">
+                            <span>Appointment</span>
+                            <h2>Make an Appointment</h2>
+                        </div>
+                        <form action="#" method="POST">
+                            @csrf
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 mb-30">
+                                    <input type="text" name="name" placeholder="Your Name" required>
+                                </div>
+                                <div class="col-lg-6 col-md-6 mb-30">
+                                    <input type="email" name="email" placeholder="Your Email" required>
+                                </div>
+                                <div class="col-lg-6 col-md-6 mb-30">
+                                    <input type="text" name="phone" placeholder="Phone Number">
+                                </div>
+                                <div class="col-lg-6 col-md-6 mb-30">
+                                    <select name="service" class="form-control" required>
+                                        <option value="" disabled selected>Select Service</option>
+                                        @foreach ($services as $service)
+                                            <option value="{{ $service->id }}">{{ $service->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-12 mb-30">
+                                    <textarea name="message" rows="4" placeholder="Message (optional)"></textarea>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn header-btn">Submit Request</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {{-- booking end --}}
         <!--? Team Start -->
         <div class="team-area pb-180">
             <div class="container">

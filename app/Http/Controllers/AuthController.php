@@ -23,7 +23,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user(); // User sudah terautentikasi di sini
 
-            if ($user->hasRole('Admin')) {
+            if ($user->hasRole('Admin') || $user->hasRole('Capster')) {
                 return redirect()->intended('/admin/dashboard');
             }
 
@@ -32,7 +32,7 @@ class AuthController extends Controller
             }
 
             // Jika role tidak dikenal
-            return redirect('/login')->with('error', 'Role tidak dikenali.');
+            return redirect('/login')->with('error', 'Login Gagal!');
         }
 
         return back()->with('error', 'Email atau password salah');
@@ -51,11 +51,12 @@ class AuthController extends Controller
             'password' => 'required|min:6|confirmed'
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
+        $user->assignRole('Customer');
 
         return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan login.');
     }

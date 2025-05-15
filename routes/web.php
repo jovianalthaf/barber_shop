@@ -19,8 +19,10 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::resource('/admin/capsters', CapsterController::class);
-    Route::resource('/admin/services', ServiceController::class);
+    Route::middleware(['role:Admin'])->group(function () {
+        Route::resource('/admin/capsters', CapsterController::class);
+        Route::resource('/admin/services', ServiceController::class);
+    });
     // parameters([
     //     'capsters' => 'capster:slug'
     // ]);

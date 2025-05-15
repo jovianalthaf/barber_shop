@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCapsterRequest;
 use App\Models\Capster;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class CapsterController extends Controller
 {
     public function index()
     {
-        $capsters = Capster::paginate(1); // 10 data per halaman, bisa diubah
+        $capsters = Capster::paginate(10); // 10 data per halaman, bisa diubah
         // $capsters = Capster::query(); // atau Capster::select('*')
 
         // dd($capsters->toSql());
@@ -23,20 +25,9 @@ class CapsterController extends Controller
         return view('admin.capsters.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreCapsterRequest $request)
     {
-
         try {
-            $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'tempat_tinggal' => 'required|string|max:255',
-                'phone' => 'required|string|min:12|max:13',
-                'email' => 'required|email|max:255',
-                'experience' => 'nullable|string|max:1000',
-                'specialization' => 'nullable|string|max:255',
-                'available' => 'nullable|boolean',
-                'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // max 2MB
-            ]);
 
             $insertData = [
                 'name' => $request->input('name'),
@@ -68,20 +59,9 @@ class CapsterController extends Controller
         return view('admin.capsters.edit', compact('capster'));
     }
 
-    public function update(Request $request, Capster $capster)
+    public function update(StoreCapsterRequest $request, Capster $capster)
     {
         try {
-            $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'tempat_tinggal' => 'required|string|max:255',
-                'phone' => 'nullable|string|min:12|max:13',
-                'email' => 'required|email|max:255',
-                'experience' => 'nullable|string|max:1000',
-                'specialization' => 'nullable|string|max:255',
-                'available' => 'nullable|boolean',
-                'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // max 2MB
-            ]);
-
             $insertData = [
                 'name' => $request->input('name'),
                 'tempat_tinggal' => $request->input('tempat_tinggal'),
@@ -110,6 +90,15 @@ class CapsterController extends Controller
     public function destroy(Capster $capster)
     {
         try {
+
+            if (!empty($capster->foto)) {
+                // Pastikan ini sesuai dengan path yang tersimpan
+                $filePath = $capster->foto; // karena kamu sudah pakai 'public' disk, cukup path relatif
+                if (Storage::disk('public')->exists($filePath)) {
+                    Storage::disk('public')->delete($filePath);
+                }
+            }
+
             $capster->delete();
             return redirect()->route('capsters.index')->with('Success', 'Capsters Berhasil di delete');
         } catch (ValidationException $e) {
